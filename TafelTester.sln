@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1145
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TafelTester", "TafelTester\TafelTester.csproj", "{D31E046E-478F-4F9D-9F47-C36F8B45A3BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D31E046E-478F-4F9D-9F47-C36F8B45A3BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D31E046E-478F-4F9D-9F47-C36F8B45A3BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D31E046E-478F-4F9D-9F47-C36F8B45A3BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D31E046E-478F-4F9D-9F47-C36F8B45A3BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {39D0602F-888C-42E7-A3F3-8377500BE1B6}
+	EndGlobalSection
+EndGlobal
