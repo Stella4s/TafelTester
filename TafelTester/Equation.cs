@@ -10,13 +10,9 @@ namespace TafelTester
 {
     public class Equation : INotifyPropertyChanged
     {
-        private int _numA, _numB, _numC;
-        private Random getRandom;
-
-        public Equation()
-        {
-            getRandom = new Random();
-        }
+        private int _numA, _numB, _numC, _NumAntwoord;
+        private string _strAntwoord;
+        private bool _isCorrect, _isAnswered;
 
         #region properties
         public int NumA
@@ -48,12 +44,61 @@ namespace TafelTester
                 OnPropertyChanged();
             }
         }
+        public int NumAntwoord
+        {
+            get { return _NumAntwoord; }
+            set
+            {
+                _NumAntwoord = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool IsCorrect
+        {
+            get { return _isCorrect; }
+            set
+            {
+                _isCorrect = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool IsAnswered
+        {
+            get { return _isAnswered; }
+            set
+            {
+                _isAnswered = value;
+                OnPropertyChanged();
+            }
+        }
+        public string StrAntwoord
+        {
+            get { return _strAntwoord; }
+            set
+            {
+                _strAntwoord = value;
+                _NumAntwoord = Convert.ToInt32(StrAntwoord);
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
-        public void getSum()
+        public void GetSum()
         {
-            NumB = getRandom.Next(1, 11);
             NumC = NumA * NumB;
+        }
+    
+        public void CheckAntwoord()
+        {
+            if (NumAntwoord == 0)
+                IsAnswered = false;
+            else
+            {
+                if (NumAntwoord == NumC)
+                    IsCorrect = true;
+                else
+                    IsCorrect = false;
+            }
         }
 
 

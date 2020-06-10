@@ -12,6 +12,10 @@
     </Window.DataContext>
 
     <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        
         <DataTemplate x:Key="DataTemplate1">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -26,9 +30,20 @@
                 <TextBlock Grid.Column="1" Text="x"/>
                 <TextBlock Grid.Column="2" Text="{Binding NumB}"/>
                 <TextBlock Grid.Column="3" Text="="/>
-                <TextBox Grid.Column="4"/>
-                <TextBlock Grid.Column="5" Text=""/>
+                <TextBox   Grid.Column="4" Text="{Binding StrAntwoord}"/>
+                <TextBlock Grid.Column="5" Text="" x:Name="textblockJuist"/>
             </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding ShowAnswerCheck}" Value="false">
+                    <Setter TargetName="textblockJuist" Property="Text" Value=""/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsCorrect}" Value="true">
+                    <Setter TargetName="textblockJuist" Property="Text" Value="Juist"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsCorrect}" Value="false">
+                    <Setter TargetName="textblockJuist" Property="Text" Value="Onjuist"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
         
     </Window.Resources>
@@ -50,14 +65,16 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Vul de tafel in die je wilt oefenen."/>
-                <ComboBox  Grid.Column="1" ItemsSource="{Binding TafelOpties}" SelectedItem="{Binding TafelNummer}"/>
-                <Button Grid.Row="1" Grid.ColumnSpan="2" Content="Maak sommen" Command="{Binding GetEquationsCmd}"/>
+                <ComboBox  Grid.Column="1" ItemsSource="{Binding TafelOpties}" SelectedItem="{Binding TafelNummer}" SelectedIndex="0"/>
+                <Button Grid.Row="1" Grid.ColumnSpan="2" Content="Geef sommen" Command="{Binding GetEquationsCmd}"/>
             </Grid>
             
             <Grid Grid.Row="1">
                 <ItemsControl ItemsSource="{Binding Equations}" ItemTemplate="{DynamicResource DataTemplate1}">
                 </ItemsControl>
             </Grid>
+
+            <Button Grid.Row="2" Content="Check Antwoord" Command="{Binding GetAnswersCmd}"/>
 
         </Grid>
     </Grid>
