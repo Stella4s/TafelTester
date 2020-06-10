@@ -16,7 +16,7 @@ namespace TafelTester
         private readonly int somAantal = 6;
         private int _tafelNummer;
         private int[] _tafelOpties, _RandomNumArr;
-        private bool _ShowAnswerCheck;
+        private bool _AnswerCheck;
 
 
         public ViewModel()
@@ -25,6 +25,7 @@ namespace TafelTester
             RandomNumArr = new int[somAantal];
             InitializeEquations();
             ArrTafelOpties = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            AnswerCheck = false;
         }
 
         #region properties
@@ -64,12 +65,12 @@ namespace TafelTester
                 OnPropertyChanged();
             }
         }
-        public bool ShowAnswerCheck
+        public bool AnswerCheck
         {
-            get { return _ShowAnswerCheck; }
+            get { return _AnswerCheck; }
             set
             {
-                _ShowAnswerCheck = value;
+                _AnswerCheck = value;
                 OnPropertyChanged();
             }
         }
@@ -87,11 +88,20 @@ namespace TafelTester
                 Equations[i] = new Equation { NumA = 0, NumB = 0, NumC = 0 };
             }
         }
+        public void ResetEquations()
+        {
+            for (int i = 0; i < somAantal; i++)
+            {
+                Equations[i].StrAntwoord = null;
+            }
+        }
         /// <summary>
         /// Calls FillRandomArray method, then sets NumA and NumB before calling getSum to get NumC.
         /// </summary>
         public void GetEquations()
         {
+            ResetEquations();
+            AnswerCheck = false;
             FillRandomArray();
             for (int i = 0; i < somAantal; i++)
             {
@@ -102,12 +112,12 @@ namespace TafelTester
         }
         public void GetAnswers()
         {
-            ShowAnswerCheck = true;
+            AnswerCheck = true;
             foreach (Equation equation in Equations)
             {
                 equation.CheckAntwoord();
                 if (equation.IsAnswered == false)
-                    ShowAnswerCheck = false;
+                    AnswerCheck = false;
             }
         }
 

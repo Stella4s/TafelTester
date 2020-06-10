@@ -77,7 +77,16 @@ namespace TafelTester
             set
             {
                 _strAntwoord = value;
-                _NumAntwoord = Convert.ToInt32(StrAntwoord);
+                //To ensure no crash happens if user fills in numbers.
+                try
+                {
+                    _NumAntwoord = Convert.ToInt32(StrAntwoord);
+                }
+                catch
+                {
+                    _NumAntwoord = 0;
+                    StrAntwoord = null;
+                }
                 OnPropertyChanged();
             }
         }
@@ -94,6 +103,7 @@ namespace TafelTester
                 IsAnswered = false;
             else
             {
+                IsAnswered = true;
                 if (NumAntwoord == NumC)
                     IsCorrect = true;
                 else
