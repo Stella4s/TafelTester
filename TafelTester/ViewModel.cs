@@ -112,28 +112,42 @@ namespace TafelTester
         }
 
         //Variables used in this method.
-        bool isSame, repeat;
+        //bool isSame, repeat;
+
         /// <summary>
         /// Generates random numbers to fill the array the lenght of somAantal.
-        /// Using a for-loop that only checks the numbers in RandomNummArr prior to the generated number. 
-        /// Which cuts down on unnecessary checking of numbers after the generated number that will be changed anyways.
-        /// Whilst the do while loop ensures the process will be at least checked once and repeated if the number generated was already used.
+        /// Making a temporary list from 1 to 10.
+        /// Using random generation to select one of the numbers based on index.
+        /// And removing said index from the list to ensure no doubles whilst still keeping random selection.
         /// </summary>
         public void FillRandomArray()
         {
-            isSame = false; repeat = true;
-            //Creates a temporary list from 1 to 10 that can have items removed as they are picked.
-            //To both ensure randomness, without endless looping to check if the random array already contains said value.
+           // isSame = false; repeat = true;
+
+
             List<int> tempList = new List<int>(ArrTafelOpties);
             for (int i = 0; i < somAantal; i++)
             {
+                int numX = getRandom.Next(1, tempList.Count);
+                RandomNumArr[i] = tempList[numX];
+                tempList.RemoveAt(numX);
+
+
+                /* I removed all this code as the random.next generation could get stuck in an endless loop.
+                 * Constantly generating already used numbers and never breaking out of the while loop.
+                 * The way I combatted this was making a temporary list from 1 to 10.
+                 * Using random generation to select one of the numbers based on index.
+                 * Then removing that option from the list if it was used.
+                 * Ensuring no double numbers, whilst still keeping a random selection.
+                 
                 isSame = false;
                 do
                 {
-                    int numX = getRandom.Next(1, tempList.Count);
+         
+                    int numX = getRandom.Next(1, 11);
                     for (int j = 0; j < i; j++)
                     {
-                        if (tempList[numX] == RandomNumArr[j])
+                        if (numX == RandomNumArr[j])
                         {
                             isSame = true;
                             break;
@@ -142,12 +156,12 @@ namespace TafelTester
                     if (!isSame)
                     {
                         repeat = false;
-                        RandomNumArr[i] = tempList[numX];
-                        tempList.RemoveAt(numX);
+                        RandomNumArr[i] = numX;
                     }
                     else
                         repeat = true;
-                } while (repeat);
+
+                } while (repeat);*/
             }
 
         }
