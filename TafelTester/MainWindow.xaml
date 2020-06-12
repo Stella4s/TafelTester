@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TafelTester"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TafelTester" Height="450" Width="800">
 
     <Window.DataContext>
         <local:ViewModel/>
@@ -90,9 +90,9 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Vul de tafel in die je wilt oefenen."/>
                     <ComboBox  Grid.Column="1" ItemsSource="{Binding ArrTafelOpties}" SelectedItem="{Binding TafelNummer}" SelectedIndex="0"
-                           FontSize="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                           FontSize="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsEnabled="{Binding AnswerCheck}"/>
                 </Grid>
-                <Button Grid.Row="1" Grid.ColumnSpan="2" Content="Geef sommen" Command="{Binding GetEquationsCmd}" Margin="0,5"/>
+                <Button Grid.Row="1" Grid.ColumnSpan="2" Content="Geef sommen" Command="{Binding GetEquationsCmd}" Margin="0,5" IsEnabled="{Binding AnswerCheck}"/>
                 
             </Grid>
             
@@ -101,7 +101,29 @@
                 </ItemsControl>
             </Grid>
 
-            <Button Grid.Row="2" Content="Check Antwoord" Command="{Binding GetAnswersCmd}" Margin="10"/>
+            <Grid  Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Check Antwoord" Command="{Binding GetAnswersCmd}" Margin="10" IsEnabled="{Binding AllowCheckAntwoord}"/>
+                <StackPanel Name="stackpanel1" Grid.Column="1" Orientation="Horizontal" Margin="10">
+                    <StackPanel.Resources>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding AllowCheckAntwoord}" Value="false">
+                                    <Setter Property="Opacity" Value="1"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AllowCheckAntwoord}" Value="true">
+                                    <Setter Property="Opacity" Value="0"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Text="Je hebt een "/>
+                    <TextBlock Text="{Binding ScoreNum}"/>
+                </StackPanel>
+            </Grid>
 
         </Grid>
     </Grid>

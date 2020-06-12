@@ -15,8 +15,9 @@ namespace TafelTester
         private Random getRandom;
         private readonly int somAantal = 6;
         private int _tafelNummer;
+        private double _ScoreNum;
         private int[] _tafelOpties, _RandomNumArr;
-        private bool _AnswerCheck;
+        private bool _AnswerCheck, _AllowCheckAntwoord;
 
 
         public ViewModel()
@@ -25,7 +26,7 @@ namespace TafelTester
             RandomNumArr = new int[somAantal];
             InitializeEquations();
             ArrTafelOpties = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-            AnswerCheck = false;
+            AnswerCheck = true;
         }
 
         #region properties
@@ -44,6 +45,15 @@ namespace TafelTester
             set
             {
                 _tafelNummer = value;
+                OnPropertyChanged();
+            }
+        }
+        public double ScoreNum
+        {
+            get { return _ScoreNum; }
+            set
+            {
+                _ScoreNum = value;
                 OnPropertyChanged();
             }
         }
@@ -71,6 +81,15 @@ namespace TafelTester
             set
             {
                 _AnswerCheck = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool AllowCheckAntwoord
+        {
+            get { return _AllowCheckAntwoord; }
+            set
+            {
+                _AllowCheckAntwoord = value;
                 OnPropertyChanged();
             }
         }
@@ -102,6 +121,7 @@ namespace TafelTester
         {
             ResetEquations();
             AnswerCheck = false;
+            AllowCheckAntwoord = true;
             FillRandomArray();
             for (int i = 0; i < somAantal; i++)
             {
@@ -112,13 +132,21 @@ namespace TafelTester
         }
         public void GetAnswers()
         {
+            int punten = 0;
             AnswerCheck = true;
+            AllowCheckAntwoord = false;
             foreach (Equation equation in Equations)
             {
                 equation.CheckAntwoord();
                 if (equation.IsAnswered == false)
+                {
                     AnswerCheck = false;
+                    AllowCheckAntwoord = true;
+                }
+                if (equation.IsCorrect)
+                    punten++;
             }
+           ScoreNum = Math.Round((punten / ((double)Equations.Length) * 10), 1);
         }
 
         //Variables used in this method.
@@ -138,7 +166,7 @@ namespace TafelTester
             List<int> tempList = new List<int>(ArrTafelOpties);
             for (int i = 0; i < somAantal; i++)
             {
-                int numX = getRandom.Next(1, tempList.Count);
+                int numX = getRandom.Next(0, tempList.Count);
                 RandomNumArr[i] = tempList[numX];
                 tempList.RemoveAt(numX);
 
